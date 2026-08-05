@@ -87,6 +87,9 @@ async def convert_nfa_to_dfa(data: NFARequest):
                 f.write(f"{transition.from_state} {transition.symbol} {transition.to_state}\n")
             input_file = f.name
         
+        print(f"Created input file: {input_file}")
+        print(f"Input data: states={data.numStates}, alphabet={data.alphabet}, start={data.startState}")
+        
         # Create temporary directory for output files
         temp_dir = tempfile.mkdtemp()
         
@@ -195,9 +198,16 @@ async def convert_nfa_to_dfa(data: NFARequest):
                 shutil.rmtree(temp_dir)
     
     except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail=f'Conversion failed: {str(e)}')
+        error_msg = f'Conversion failed: {str(e)}'
+        print(f"ERROR: {error_msg}")
+        print(f"stderr: {e.stderr if hasattr(e, 'stderr') else 'N/A'}")
+        raise HTTPException(status_code=500, detail=error_msg)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        error_msg = f'Unexpected error: {str(e)}'
+        print(f"ERROR: {error_msg}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=error_msg)
 
 @app.get("/")
 async def root():

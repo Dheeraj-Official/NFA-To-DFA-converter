@@ -102,18 +102,38 @@ async def convert_nfa_to_dfa(data: NFARequest):
             if not os.path.exists(CPP_EXECUTABLE):
                 # Try to compile it if it doesn't exist
                 cpp_source = os.path.join(os.path.dirname(base_executable), '01_NFA_To_DFA.cpp')
+                print(f"Looking for C++ source at: {cpp_source}")
+                print(f"Source exists: {os.path.exists(cpp_source)}")
+                
                 if os.path.exists(cpp_source):
                     print("Compiling C++ program...")
                     # Compile without .exe extension for Linux
                     output_executable = base_executable
-                    subprocess.run(['g++', '-std=c++17', '-O2', cpp_source, '-o', output_executable], check=True)
-                    # Update the executable path
-                    CPP_EXECUTABLE = output_executable
+                    try:
+                        result = subprocess.run(['g++', '-std=c++17', '-O2', cpp_source, '-o', output_executable], 
+                                              capture_output=True, text=True, check=True)
+                        print(f"Compilation successful. Output: {result.stdout}")
+                        # Update the executable path
+                        CPP_EXECUTABLE = output_executable
+                    except subprocess.CalledProcessError as e:
+                        print(f"Compilation failed: {e.stderr}")
+                        raise HTTPException(status_code=500, detail=f'C++ compilation failed: {e.stderr}')
                 else:
+                    print(f"C++ source file not found at {cpp_source}")
                     raise HTTPException(status_code=500, detail='C++ executable not found and source file missing')
             
+            print(f"Using C++ executable: {CPP_EXECUTABLE}")
+            print(f"Executable exists: {os.path.exists(CPP_EXECUTABLE)}")
+            
             # Run C++ program (assuming it outputs to current directory)
-            subprocess.run([CPP_EXECUTABLE, backend_input], cwd=current_dir, check=True)
+            print(f"Running C++ executable: {CPP_EXECUTABLE} with input: {backend_input}")
+            try:
+                result = subprocess.run([CPP_EXECUTABLE, backend_input], cwd=current_dir, 
+                                      capture_output=True, text=True, check=True)
+                print(f"C++ execution successful. Output: {result.stdout}")
+            except subprocess.CalledProcessError as e:
+                print(f"C++ execution failed: {e.stderr}")
+                raise HTTPException(status_code=500, detail=f'C++ execution failed: {e.stderr}')
             
             # Read the generated JSON files
             with open(os.path.join(current_dir, 'nfa.json'), 'r') as f:
@@ -123,7 +143,14 @@ async def convert_nfa_to_dfa(data: NFARequest):
                 dfa_data = json.load(f)
             
             # Run Python script to generate .dot files
-            subprocess.run(['python', PYTHON_SCRIPT, '--dir', current_dir], check=True)
+            print(f"Running Python script: {PYTHON_SCRIPT}")
+            try:
+                result = subprocess.run(['python', PYTHON_SCRIPT, '--dir', current_dir], 
+                                      capture_output=True, text=True, check=True)
+                print(f"Python script execution successful. Output: {result.stdout}")
+            except subprocess.CalledProcessError as e:
+                print(f"Python script execution failed: {e.stderr}")
+                raise HTTPException(status_code=500, detail=f'Python script execution failed: {e.stderr}')
             
             # Use Graphviz to convert .dot files to SVG
             nfa_dot_path = os.path.join(current_dir, 'nfa_pretty.dot')

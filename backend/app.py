@@ -102,7 +102,8 @@ async def convert_nfa_to_dfa(data: NFARequest):
             shutil.copy(input_file, backend_input)
             
             # Check if C++ executable exists
-            if not os.path.exists(CPP_EXECUTABLE):
+            cpp_executable = CPP_EXECUTABLE  # Use local variable to avoid scope issues
+            if not os.path.exists(cpp_executable):
                 # Try to compile it if it doesn't exist
                 cpp_source = os.path.join(os.path.dirname(base_executable), '01_NFA_To_DFA.cpp')
                 print(f"Looking for C++ source at: {cpp_source}")
@@ -117,7 +118,7 @@ async def convert_nfa_to_dfa(data: NFARequest):
                                               capture_output=True, text=True, check=True)
                         print(f"Compilation successful. Output: {result.stdout}")
                         # Update the executable path
-                        CPP_EXECUTABLE = output_executable
+                        cpp_executable = output_executable
                     except subprocess.CalledProcessError as e:
                         print(f"Compilation failed: {e.stderr}")
                         raise HTTPException(status_code=500, detail=f'C++ compilation failed: {e.stderr}')
@@ -125,13 +126,13 @@ async def convert_nfa_to_dfa(data: NFARequest):
                     print(f"C++ source file not found at {cpp_source}")
                     raise HTTPException(status_code=500, detail='C++ executable not found and source file missing')
             
-            print(f"Using C++ executable: {CPP_EXECUTABLE}")
-            print(f"Executable exists: {os.path.exists(CPP_EXECUTABLE)}")
+            print(f"Using C++ executable: {cpp_executable}")
+            print(f"Executable exists: {os.path.exists(cpp_executable)}")
             
             # Run C++ program (assuming it outputs to current directory)
-            print(f"Running C++ executable: {CPP_EXECUTABLE} with input: {backend_input}")
+            print(f"Running C++ executable: {cpp_executable} with input: {backend_input}")
             try:
-                result = subprocess.run([CPP_EXECUTABLE, backend_input], cwd=current_dir, 
+                result = subprocess.run([cpp_executable, backend_input], cwd=current_dir, 
                                       capture_output=True, text=True, check=True)
                 print(f"C++ execution successful. Output: {result.stdout}")
             except subprocess.CalledProcessError as e:

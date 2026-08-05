@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Build outputs
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# Exception: Allow our C++ executable
+!backend/cpp/01_NFA_To_DFA.exe
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+input.txt
+output.txt
+nfa.json
+dfa.json
+nfa_pretty.dot
+dfa_pretty.dot
+nfa.dot
+dfa.dot
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local

@@ -1,0 +1,15 @@
+digraph "Minimized DFA\n(Optimized)" {
+	bgcolor=white fontname=Helvetica rankdir=LR
+	node [fontname=Helvetica fontsize=13 style=filled]
+	edge [color="#555555" fontname=Helvetica fontsize=12]
+	__start [color=white shape=point width=0.05]
+	__start -> M0 [color="#333333"]
+	M0 [label="M0\n{0}" color="#d97706" fillcolor="#f0e68c" penwidth=1.5 shape=circle]
+	M1 [label="M1\n{1}" color="#d97706" fillcolor="#f2f2f2" penwidth=1.5 shape=circle]
+	M2 [label="M2\n{2,3}" color="#d97706" fillcolor="#b7f0c0" penwidth=2 shape=doublecircle]
+	M0 -> M1 [label="a, b"]
+	M0 -> M0 [label=c]
+	M1 -> M1 [label="a, b"]
+	M1 -> M2 [label=c]
+	M2 -> M2 [label="a, b, c"]
+}

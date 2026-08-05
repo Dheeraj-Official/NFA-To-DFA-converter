@@ -1,0 +1,71 @@
+{
+  "numStates": 3,
+  "alphabet": [
+    "a",
+    "b",
+    "c"
+  ],
+  "start": 0,
+  "finalStates": [
+    2
+  ],
+  "stateSets": [
+    [
+      0
+    ],
+    [
+      1
+    ],
+    [
+      2,
+      3
+    ]
+  ],
+  "transitions": [
+    {
+      "from": 0,
+      "symbol": "a",
+      "to": 1
+    },
+    {
+      "from": 0,
+      "symbol": "b",
+      "to": 1
+    },
+    {
+      "from": 0,
+      "symbol": "c",
+      "to": 0
+    },
+    {
+      "from": 1,
+      "symbol": "a",
+      "to": 1
+    },
+    {
+      "from": 1,
+      "symbol": "b",
+      "to": 1
+    },
+    {
+      "from": 1,
+      "symbol": "c",
+      "to": 2
+    },
+    {
+      "from": 2,
+      "symbol": "a",
+      "to": 2
+    },
+    {
+      "from": 2,
+      "symbol": "b",
+      "to": 2
+    },
+    {
+      "from": 2,
+      "symbol": "c",
+      "to": 2
+    }
+  ]
+}

@@ -11,10 +11,3 @@ services:
       - key: ALLOWED_ORIGINS
         value: "*"
     healthCheckPath: /
-
-sites:
-  - type: static
-    name: nfa-dfa-frontend
-    plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    publishDir: frontend/dist

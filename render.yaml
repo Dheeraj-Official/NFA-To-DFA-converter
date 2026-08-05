@@ -11,3 +11,13 @@ services:
       - key: ALLOWED_ORIGINS
         value: "*"
     healthCheckPath: /
+
+  - type: web
+    name: nfa-dfa-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm install -g serve && serve -s dist -l 3000
+    envVars:
+      - key: NODE_VERSION
+        value: 18

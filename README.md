@@ -22,6 +22,7 @@ A beautiful web application that converts Non-Deterministic Finite Automata (NFA
 - **Epsilon Support**: Handles epsilon transitions in NFA (displayed as 'e')
 - **Example Loading**: Pre-built examples with epsilon transitions and multiple alphabets
 - **Responsive Design**: Works on desktop and tablet devices
+- **Cloud Deployment**: Live on Render.com with Docker containerization
 
 ##  Setup Instructions
 
@@ -78,6 +79,10 @@ A beautiful web application that converts Non-Deterministic Finite Automata (NFA
 
 ## 🎮 Usage
 
+### Live Application
+Access the deployed application at: [https://nfa-dfa-frontend.onrender.com](https://nfa-dfa-frontend.onrender.com)
+
+### Local Development
 1. **Open the web application** at `http://localhost:5173`
 
 2. **Enter NFA data:**
@@ -257,43 +262,19 @@ Transitions:
 2 b 2
 ```
 
-## � Deployment
+## 🚀 Deployment
 
-This project is ready for deployment to Render.com with full Docker support and configuration files included.
+This project is successfully deployed on Render.com with Docker containerization.
 
-### Quick Deployment Guide
+### Live Application
 
-1. **Prepare your repository**:
-   ```bash
-   git add .
-   git commit -m "Ready for deployment"
-   git push origin main
-   ```
-
-2. **Deploy to Render.com**:
-   - Sign up at [render.com](https://render.com)
-   - Connect your GitHub repository
-   - Render will automatically detect `render.yaml` and deploy both services
-
-3. **Configuration files included**:
-   - `backend/Dockerfile` - Docker configuration for backend
-   - `render.yaml` - Render.com deployment configuration
-   - `backend/.env.example` - Backend environment variables template
-   - `frontend/.env.example` - Frontend environment variables template
-
-### Detailed Instructions
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions, including:
-- Step-by-step Render.com setup
-- Environment variable configuration
-- Troubleshooting common issues
-- CI/CD with automatic deployments
-- Custom domain setup
+- **Frontend**: [https://nfa-dfa-frontend.onrender.com](https://nfa-dfa-frontend.onrender.com)
+- **Backend**: [https://nfa-dfa-api.onrender.com](https://nfa-dfa-api.onrender.com)
 
 ### Deployment Architecture
 
 ```
-Frontend (Render Static Site)
+Frontend (Render Web Service - Node.js)
     ↓ API calls
 Backend (Render Web Service - Docker)
     ├── FastAPI server
@@ -302,9 +283,27 @@ Backend (Render Web Service - Docker)
     └── Graphviz diagram generation
 ```
 
+### Configuration Files
+
+- `backend/Dockerfile` - Docker configuration for backend
+- `render.yaml` - Render.com Blueprint configuration
+- `backend/.env.example` - Backend environment variables template
+- `frontend/.env.example` - Frontend environment variables template
+
+### Deployment Details
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment instructions, including:
+- Step-by-step Render.com setup
+- Environment variable configuration
+- Troubleshooting common issues
+- CI/CD with automatic deployments
+- Custom domain setup
+
 ### Cost
 
-- **Free tier**: $0/month (750 hours backend, unlimited frontend)
+- **Current deployment**: $0/month (free tier)
+- **Backend**: 750 hours/month (free tier)
+- **Frontend**: Unlimited (free tier)
 - **Always-on backend**: $7/month (optional upgrade)
 
 ## �🐛 Troubleshooting

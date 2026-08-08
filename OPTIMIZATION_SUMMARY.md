@@ -30,6 +30,13 @@
 - Fixed passive event listener warning by using `useEffect` with `{ passive: false }`
 - **Impact**: No browser warnings, proper wheel event handling
 
+### 7. **Production Deployment**
+- Added comprehensive error handling and logging
+- Fixed variable scope issues in Python backend
+- Optimized Docker configuration for Render.com
+- Implemented environment-based API URL detection
+- **Impact**: Reliable production deployment, easier debugging
+
 ## Current Tech Stack
 
 ### Frontend
@@ -82,6 +89,10 @@
 
 ## Usage
 
+### Live Application
+Access the deployed application at: [https://nfa-dfa-frontend.onrender.com](https://nfa-dfa-frontend.onrender.com)
+
+### Local Development
 1. Start backend: `cd backend && uvicorn app:app --host 127.0.0.1 --port 5000`
 2. Start frontend: `cd frontend && npm run dev`
 3. Open browser at http://localhost:5173
